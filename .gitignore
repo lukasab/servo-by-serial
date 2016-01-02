@@ -1,0 +1,30 @@
+// Control servo angle by serial monitor
+// Created by Lukas - 01/01/2016
+
+#include <Servo.h>                                                                  //include servo library
+
+Servo servo1;                                                                       // create servo object to control a servo
+
+int angleServo;
+
+void setup() {
+ servo1.attach(7);                                                                  //attach servo to digital pin 7
+ Serial.begin(9600);
+ Serial.println("Ready");
+ Serial.println("Pleas select a angle between 0 and 180 for the servo."); 
+ servo1.write(0);
+}
+
+void loop() {
+  if (Serial.available() > 0){
+    angleServo = Serial.parseInt();                                                 //reads intefer values from serial 
+    if ((angleServo >= 0) && (angleServo <= 180)) {
+      servo1.write(angleServo);                                                     //move the servo for the desire angle
+      Serial.println("Your desire angle was:");
+      Serial.println(angleServo);
+      delay(500);
+  } else {
+    Serial.println("That is not a valid angle.");
+  }
+}
+}
